@@ -54,7 +54,7 @@ const CONFIG = {
       time: "5:00 PM - 6:00 PM",
       title: "Taking picture",
       place: "Makita tent Kimironko",
-      description: "Capturing beautiful moments to tresure for a lifetime.",
+      description: "Capturing beautiful moments to treasure for a lifetime.",
       items: [],
     },
     {

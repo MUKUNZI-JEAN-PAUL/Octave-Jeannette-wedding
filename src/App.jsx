@@ -436,7 +436,7 @@ function App() {
       {!entered && (
         <div className="entry">
           <img
-            src="/4.jpeg"
+            src="/3.jpeg"
             alt=""
             className="entry-image"
             onError={(e) => {

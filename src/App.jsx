@@ -17,9 +17,9 @@ const CONFIG = {
   // A short poetic line or two for the very top of the invitation.
   // Wrap any part in *asterisks* to italicize it, like the closing line here.
   introLines: [
-    "Before the road brought us together,",
-    "before this day had a name,",
-    "*the story was already being written.*",
+    "Before we knew, God was preparing our hearts,",
+    "Love found us in His perfect time and grace,",
+    "*And in each other, we found the one our souls love.*",
   ],
 
   greeting:
@@ -32,45 +32,48 @@ const CONFIG = {
   // or leave it as-is and a labeled placeholder will show instead.
   storyTitle: "How it began",
   story:
-    "We met on an ordinary afternoon that turned out to be anything but. What started as easy conversation became years of showing up for one another — through new cities, long drives, and the small routines that quietly became home. Now, surrounded by the people who shaped us, we're ready to promise each other forever.",
-  storyPhoto: "/story-photo.jpg",
+       "It started on an evening like any other, during choir rehearsal. Voices filled the room, the music rose, and somewhere between the first scale and the final song, we found each other. What began as easy conversation after practice soon grew into a friendship, and then into something deeper. Through the years, we have shown up for one another in every season. in new cities, on long drives, and in the small, everyday moments that slowly became home. Along the way, we learned that the harmony we first found in song is the same one we share in life. Now, surrounded by the people who have shaped us, we are ready to begin our next chapter and promise each other forever.",
+  storyPhoto: "/story-photo.jpeg",
 
   schedule: [
     {
-      time: "10:00 AM",
-      title: "Ceremony",
-      place: "St. Example Catholic Church",
-      description: "Our vows, spoken before God and before you.",
+      time: "9:00 AM",
+      title: "Dowry",
+      place: "Makita tent Kimironko",
+      description: "Celebrating love, tradition and the union of two families.",
       items: [],
     },
     {
-      time: "2:00 PM – 4:00 PM",
+      time: "2:00 PM – 4:30 PM",
+      title: "Religious wedding",
+      place: "chapelle Jésuite Kimironko",
+      description: "Joining our hearts in love and committing our lives before God.",
+      items: [],
+    },
+    {
+      time: "5:00 PM - 6:00 PM",
+      title: "Taking picture",
+      place: "Makita tent Kimironko",
+      description: "Capturing beautiful moments to tresure for a lifetime.",
+      items: [],
+    },
+    {
+      time: "From 6:00 PM",
       title: "Reception",
-      place: "Example Garden",
-      description: "Photos, toasts, and a first look at married life.",
-      items: [
-        { time: "2:00 PM", label: "Guests arrive" },
-        { time: "2:30 PM", label: "Speeches & toasts" },
-        { time: "3:30 PM", label: "Cake & first dance" },
-      ],
-    },
-    {
-      time: "From 4:00 PM",
-      title: "Celebration",
-      place: "Dinner, music & dancing",
-      description: "Until the joy runs out.",
-      items: [],
-    },
+      place: "Makita tent Kimironko",
+      description: "Celebrating our love with family, Until the joy runs out.",
+      items: [], 
+    }
   ],
 
   galleryTitle: "Us, Lately",
 
-  venueName: "Example Garden",
-  mapQuery: "Kigali Rwanda",
+  venueName: "Makita tent Kimironko",
+  mapQuery: "MAKITA Tent Design Kimironko, Kigali, Rwanda",
 
-  dressCode: "Elegance & charm. Wear your finest to celebrate with us in style.",
+  dressCode: " Wear your finest to celebrate with us in style.",
 
-  rsvpBy: "20 November 2026",
+  rsvpBy: "27 December 2026",
 
   // Where RSVP replies get emailed. rsvpEmail is required (this is where
   // the free FormSubmit.co service sends them); rsvpCcEmail is optional —

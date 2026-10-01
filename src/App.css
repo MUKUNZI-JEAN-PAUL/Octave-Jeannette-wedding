@@ -469,7 +469,7 @@ h3 {
 .hero-names {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(52px, 9vw, 100px);
+  font-size: clamp(32px, 9vw, 100px);
   line-height: 1;
   color: var(--ivory);
 }

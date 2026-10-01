@@ -6,8 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
  * ────────────────────────────────────────────────────────────
  */
 const CONFIG = {
-  partner1: "Jeannette",
-  partner2: "Octave",
+  partner1: "Octave",
+  partner2: "Jeannette",
 
   weddingDateISO: "2026-12-27T09:00:00", // drives the countdown
   weddingDayLine: "Sunday · 27 December 2026 · Kigali",

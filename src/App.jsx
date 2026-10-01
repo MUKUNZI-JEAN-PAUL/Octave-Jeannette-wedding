@@ -518,7 +518,7 @@ function App() {
             {/* HERO */}
             <section id="home" className="hero">
               <img
-                src="/hero.jpg"
+                src="/hero.jpeg"
                 alt=""
                 className="hero-image"
                 onError={(e) => {
@@ -746,7 +746,7 @@ function App() {
           {/* FOOTER */}
           <footer className="footer">
             <img
-              src="/4.jpg"
+              src="/4.jpeg"
               alt=""
               className="footer-image"
               onError={(e) => {

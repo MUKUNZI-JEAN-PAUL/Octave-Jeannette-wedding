@@ -445,7 +445,7 @@ h3 {
   height: 100%;
   object-fit: cover;
   z-index: 0;
-  filter: blur(6px);
+  filter: blur(4px);
 }
 
 .hero-overlay {
@@ -468,8 +468,8 @@ h3 {
 
 .hero-names {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(25px, 6vw, 70px);
+  font-weight:350;
+  font-size: clamp(25px, 4vw, 25px);
   line-height: 1;
   color: var(--ivory);
 }

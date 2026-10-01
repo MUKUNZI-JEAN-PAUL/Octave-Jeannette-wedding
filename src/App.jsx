@@ -746,7 +746,7 @@ function App() {
           {/* FOOTER */}
           <footer className="footer">
             <img
-              src="/4.jpeg"
+              src="/2.jpeg"
               alt=""
               className="footer-image"
               onError={(e) => {

@@ -1150,7 +1150,7 @@ h3 {
   }
 
   .hero-names {
-    font-size: clamp(38px, 9vw, 42px);
+    font-size: clamp(38px, 10vw, 42px);
   }
 }
 
@@ -1160,6 +1160,6 @@ h3 {
   }
 
   .hero-names {
-    font-size: clamp(28px, 9vw, 32px);
+    font-size: clamp(28px, 12vw, 32px);
   }
 }

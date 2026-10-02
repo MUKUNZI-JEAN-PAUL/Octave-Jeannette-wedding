@@ -84,7 +84,7 @@ const CONFIG = {
   // activation email to rsvpEmail with a "Confirm" link. Someone must
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
-  rsvpEmail: "romeoctave11@gmail.com",
+  rsvpEmail: "mukunzijayp@gmail.com",
   rsvpCcEmail: "",
 
   // ── CONTACTS (VIEW ONLY) ──

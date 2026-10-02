@@ -84,24 +84,30 @@ const CONFIG = {
   // activation email to rsvpEmail with a "Confirm" link. Someone must
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
-  rsvpEmail: "romeoctave11@gmail.com",
-  rsvpCcEmail: "janetreigns98@gmail.com",
+  rsvpEmail: "jeanette@example.com",
+  rsvpCcEmail: "octave@example.com",
 
   // ── CONTACTS (VIEW ONLY) ──
   // Only DISPLAYED on the last page ("Get in touch"). NOT used for RSVPs.
-  // numbers: one or more phone numbers per person — add as many as you like.
-  //          Any format works ("0784259192", "+250 784 259 192", ...).
-  // email:   optional — leave it out to hide.
+  // Each person has a list of numbers. Write a number either as plain text
+  // ("250784259192") or with a name ({ name: "Mama Jeannette", number: "..." })
+  // — the name appears above that number. Any phone format works.
   contacts: [
     {
       label: "Jeannette",
       role: "The bride",
-      numbers: ["250784259192","250781323010"], // <- replace the 2nd number
+      numbers: [
+        { name: "Jeannette", number: "250784259192" },
+        { name: "SECOND NAME", number: "250780000000" }, // <- replace both
+      ],
     },
     {
       label: "Octave",
       role: "The groom",
-      numbers: ["250782020662","250788654711"], // <- replace the 2nd number
+      numbers: [
+        { name: "Octave", number: "250782020662" },
+        { name: "SECOND NAME", number: "250780000001" }, // <- replace both
+      ],
     },
   ],
 
@@ -826,8 +832,12 @@ function App() {
                       <p className="contact-role">{c.role}</p>
                       <p className="contact-name">{c.label}</p>
 
-                      {(c.numbers || [c.number]).filter(Boolean).map((num) => (
+                      {(c.numbers || [c.number]).filter(Boolean).map((entry) => {
+                        const num = typeof entry === "object" ? entry.number : entry;
+                        const personName = typeof entry === "object" ? entry.name : "";
+                        return (
                         <div className="contact-line" key={num}>
+                          {personName && <p className="contact-line-name">{personName}</p>}
                           <a className="contact-number" href={`tel:+${normalizePhone(num)}`}>
                             {formatPhone(num)}
                           </a>
@@ -845,7 +855,8 @@ function App() {
                             </a>
                           </div>
                         </div>
-                      ))}
+                        );
+                      })}
 
                       {c.email && (
                         <a className="contact-email" href={`mailto:${c.email}`}>

@@ -97,7 +97,7 @@ const CONFIG = {
       label: "Jeannette",
       role: "The bride",
       numbers: [
-        { name: "Jeannette", number: "250784259192" },
+        { name: "Jeannette", number: "250782020662" },
         { name: "Ines", number: "250781323010" }, // <- replace both
       ],
     },
@@ -105,7 +105,7 @@ const CONFIG = {
       label: "Octave",
       role: "The groom",
       numbers: [
-        { name: "Octave", number: "250782020662" },
+        { name: "Octave", number: "250784259192" },
         { name: "Pacifique", number: "250788654711" }, // <- replace both
       ],
     },

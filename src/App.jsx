@@ -84,8 +84,8 @@ const CONFIG = {
   // activation email to rsvpEmail with a "Confirm" link. Someone must
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
-  rsvpEmail: "jeanette@example.com",
-  rsvpCcEmail: "octave@example.com",
+  rsvpEmail: "romeoctave11@gmail.com",
+  rsvpCcEmail: "janetreigns98@gmail.com",
 
   // ── CONTACTS — ADD EACH PARTNER'S PHONE NUMBER HERE ──
   // Used in two places: the "Get in touch" cards on the last page, and the
@@ -94,8 +94,8 @@ const CONFIG = {
   // One WhatsApp link can only reach one number, so each person gets
   // their own button. Add or remove entries freely.
   contacts: [
-    { label: "Jeannette", role: "The bride", number: "250700000000" },
-    { label: "Octave", role: "The groom", number: "250700000001" },
+    { label: "Jeannette", role: "The bride", number: "250784259192", "0781323010" },
+    { label: "Octave", role: "The groom", number: "250782020662", "0788654711"  },
   ],
 };
 

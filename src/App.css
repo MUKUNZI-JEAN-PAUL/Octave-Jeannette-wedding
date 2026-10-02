@@ -1133,18 +1133,42 @@ h3 {
   color: var(--ivory);
 }
 
+.contact-line {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.contact-name + .contact-line {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 10px;
+}
+
 .contact-number {
-  margin-top: 8px;
+  margin-top: 0;
   font-size: 15px;
   letter-spacing: 0.04em;
   color: var(--gold-light);
   text-decoration: none;
 }
 
+.contact-email {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  word-break: break-all;
+}
+
 .contact-actions {
   display: flex;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 10px;
 }
 
 .contact-actions .button {

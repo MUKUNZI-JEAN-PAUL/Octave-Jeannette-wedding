@@ -94,8 +94,8 @@ const CONFIG = {
   // One WhatsApp link can only reach one number, so each person gets
   // their own button. Add or remove entries freely.
   contacts: [
-    { label: "Jeannette", role: "The bride", number: "250784259192", "0781323010" },
-    { label: "Octave", role: "The groom", number: "250782020662", "0788654711"  },
+    { label: "Jeannette", role: "The bride", number: "250784259192" },
+    { label: "Octave", role: "The groom", number: "250782020662" },
   ],
 };
 

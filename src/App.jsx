@@ -85,7 +85,7 @@ const CONFIG = {
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
   rsvpEmail: "romeoctave11@gmail.com",
-  rsvpCcEmail: "janetreigns98@gmail.com",
+  rsvpCcEmail: "",
 
   // ── CONTACTS (VIEW ONLY) ──
   // Only DISPLAYED on the last page ("Get in touch"). NOT used for RSVPs.

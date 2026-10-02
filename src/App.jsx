@@ -84,8 +84,8 @@ const CONFIG = {
   // activation email to rsvpEmail with a "Confirm" link. Someone must
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
-  rsvpEmail: "jeanette@example.com",
-  rsvpCcEmail: "octave@example.com",
+  rsvpEmail: "romeoctave11@gmail.com",
+  rsvpCcEmail: "janetreigns98@gmail.com",
 
   // ── CONTACTS (VIEW ONLY) ──
   // Only DISPLAYED on the last page ("Get in touch"). NOT used for RSVPs.
@@ -98,7 +98,7 @@ const CONFIG = {
       role: "The bride",
       numbers: [
         { name: "Jeannette", number: "250784259192" },
-        { name: "SECOND NAME", number: "250780000000" }, // <- replace both
+        { name: "Ines", number: "250781323010" }, // <- replace both
       ],
     },
     {
@@ -106,7 +106,7 @@ const CONFIG = {
       role: "The groom",
       numbers: [
         { name: "Octave", number: "250782020662" },
-        { name: "SECOND NAME", number: "250780000001" }, // <- replace both
+        { name: "Pacifique", number: "250788654711" }, // <- replace both
       ],
     },
   ],

@@ -87,13 +87,15 @@ const CONFIG = {
   rsvpEmail: "jeanette@example.com",
   rsvpCcEmail: "octave@example.com",
 
-  // One button is shown per entry here. Digits only, country code first,
-  // no + or spaces. Add or remove entries freely — one WhatsApp link
-  // can only reach one number at a time, so each number gets its own
-  // button rather than one message going to both at once.
-  whatsappNumbers: [
-    { label: "Jeanette", number: "250700000000" },
-    { label: "Octave", number: "250700000001" },
+  // ── CONTACTS — ADD EACH PARTNER'S PHONE NUMBER HERE ──
+  // Used in two places: the "Get in touch" cards on the last page, and the
+  // "WhatsApp" buttons inside the RSVP form. Digits only, country code
+  // first, no + or spaces (e.g. Rwanda 0788 123 456 -> "250788123456").
+  // One WhatsApp link can only reach one number, so each person gets
+  // their own button. Add or remove entries freely.
+  contacts: [
+    { label: "Jeannette", role: "The bride", number: "250700000000" },
+    { label: "Octave", role: "The groom", number: "250700000001" },
   ],
 };
 
@@ -104,6 +106,12 @@ const GALLERY = [
   { src: "/3.jpeg", alt: "Add an engagement photo" },
   { src: "/4.jpeg", alt: "Add a photo with family" },
 ];
+
+function formatPhone(number) {
+  // 250788123456 -> +250 788 123 456
+  const n = String(number).replace(/\D/g, "");
+  return `+${n.slice(0, 3)} ${n.slice(3, 6)} ${n.slice(6, 9)} ${n.slice(9)}`.trim();
+}
 
 function renderEmphasis(line) {
   const parts = line.split("*");
@@ -394,16 +402,21 @@ function App() {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          _subject: `RSVP from ${guestName || "a guest"} — ${CONFIG.partner1} & ${CONFIG.partner2}`,
+          _subject: `RSVP · ${guestName || "A guest"} ${
+            attending === "yes" ? "will attend" : "cannot attend"
+          } — ${CONFIG.partner1} & ${CONFIG.partner2}`,
           _cc: CONFIG.rsvpCcEmail || undefined,
           _template: "table",
-          Name: guestName,
-          Attending: attending === "yes" ? "Accepts with pleasure" : "Declines with regret",
-          "Guest count": attending === "yes" ? guestCount : "—",
-          "Children attending": childrenAttending || "—",
-          Phone: phone || "—",
-          "Song request": song || "—",
-          Message: message || "—",
+          // Field order below is the order they appear in the email.
+          "Guest name": guestName,
+          Response:
+            attending === "yes" ? "✔ Accepts with pleasure" : "✘ Declines with regret",
+          "Number of guests": attending === "yes" ? guestCount : "—",
+          "Children attending": attending === "yes" ? childrenAttending || "None listed" : "—",
+          "Phone number": phone || "Not provided",
+          "Song request": song || "No request",
+          "Message for the couple": message || "No message",
+          Event: `${CONFIG.weddingDateDisplay} · ${CONFIG.venueName}`,
         }),
       });
       if (!res.ok) throw new Error("Request failed");
@@ -415,13 +428,27 @@ function App() {
     }
   };
 
-  const whatsappHref = (number) => {
-    const text =
-      attending === "no"
-        ? `Hello ${CONFIG.partner1} & ${CONFIG.partner2}! ${guestName || "I"} won't be able to make it on ${CONFIG.weddingDateDisplay}, but sending love.`
-        : `Hello ${CONFIG.partner1} & ${CONFIG.partner2}! ${guestName || "I"} would love to join you on ${CONFIG.weddingDateDisplay}. Party size: ${guestCount}.${childrenAttending ? ` Children: ${childrenAttending}.` : ""}`;
-    return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  // Builds a neat, line-by-line WhatsApp message. Lines the guest left
+  // empty are skipped, so nothing looks half-filled.
+  const buildWhatsappText = () => {
+    const yes = attending === "yes";
+    const lines = [
+      `*RSVP — ${CONFIG.partner1} & ${CONFIG.partner2}*`,
+      `${CONFIG.weddingDateDisplay} · ${CONFIG.venueName}`,
+      "",
+      `*Name:* ${guestName || "—"}`,
+      `*Response:* ${yes ? "✔ Accepts with pleasure" : "✘ Declines with regret"}`,
+    ];
+    if (yes) lines.push(`*Guests:* ${guestCount}`);
+    if (yes && childrenAttending) lines.push(`*Children:* ${childrenAttending}`);
+    if (phone) lines.push(`*Phone:* ${phone}`);
+    if (song) lines.push(`*Song request:* ♪ ${song}`);
+    if (message) lines.push("", `*Message:*`, message);
+    return lines.join("\n");
   };
+
+  const whatsappHref = (number) =>
+    `https://wa.me/${number}?text=${encodeURIComponent(buildWhatsappText())}`;
 
   return (
     <div className="app">
@@ -764,6 +791,37 @@ function App() {
                 </p>
               </div>
 
+              <div className="footer-contact">
+                <p className="eyebrow">Get in touch</p>
+                <p className="footer-contact-note">
+                  Questions about the day? Reach either of us directly.
+                </p>
+                <div className="contact-cards">
+                  {CONFIG.contacts.map((c) => (
+                    <div className="contact-card" key={c.number}>
+                      <p className="contact-role">{c.role}</p>
+                      <p className="contact-name">{c.label}</p>
+                      <a className="contact-number" href={`tel:+${c.number}`}>
+                        {formatPhone(c.number)}
+                      </a>
+                      <div className="contact-actions">
+                        <a className="button button--outline" href={`tel:+${c.number}`}>
+                          Call
+                        </a>
+                        <a
+                          className="button button--outline"
+                          href={`https://wa.me/${c.number}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <p className="footer-meta">
                 {CONFIG.weddingDateDisplay} · {CONFIG.venueName}
               </p>
@@ -905,17 +963,18 @@ function App() {
                     {submitting ? "Sending…" : "Send my reply"}
                   </button>
 
-                  {CONFIG.whatsappNumbers.map((wa) => (
-                    <a
-                      key={wa.number}
-                      href={whatsappHref(wa.number)}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="button button--ghost-light"
-                    >
-                      Or WhatsApp {wa.label}
-                    </a>
-                  ))}
+                  {attending &&
+                    CONFIG.contacts.map((c) => (
+                      <a
+                        key={c.number}
+                        href={whatsappHref(c.number)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="button button--ghost-light"
+                      >
+                        Or WhatsApp {c.label}
+                      </a>
+                    ))}
                 </div>
               </form>
             )}

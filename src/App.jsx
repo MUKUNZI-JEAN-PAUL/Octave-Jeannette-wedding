@@ -84,19 +84,32 @@ const CONFIG = {
   // activation email to rsvpEmail with a "Confirm" link. Someone must
   // click that link once before any replies start arriving normally.
   // It's free and needs no account or sign-up.
-  rsvpEmail: "romeoctave11@gmail.com",
-  rsvpCcEmail: "janetreigns98@gmail.com",
+  rsvpEmail: "jeanette@example.com",
+  rsvpCcEmail: "octave@example.com",
 
-  // ── CONTACTS — ADD EACH PARTNER'S PHONE NUMBER HERE ──
-  // Used in two places: the "Get in touch" cards on the last page, and the
-  // "WhatsApp" buttons inside the RSVP form. Digits only, country code
-  // first, no + or spaces (e.g. Rwanda 0788 123 456 -> "250788123456").
-  // One WhatsApp link can only reach one number, so each person gets
-  // their own button. Add or remove entries freely.
+  // ── CONTACTS (VIEW ONLY) ──
+  // Only DISPLAYED on the last page ("Get in touch"). NOT used for RSVPs.
+  // numbers: one or more phone numbers per person — add as many as you like.
+  //          Any format works ("0784259192", "+250 784 259 192", ...).
+  // email:   optional — leave it out to hide.
   contacts: [
-    { label: "Jeannette", role: "The bride", number: "250784259192" },
-    { label: "Octave", role: "The groom", number: "250782020662" },
+    {
+      label: "Jeannette",
+      role: "The bride",
+      numbers: ["250784259192", "250780000000"], // <- replace the 2nd number
+    },
+    {
+      label: "Octave",
+      role: "The groom",
+      numbers: ["250782020662", "250780000001"], // <- replace the 2nd number
+    },
   ],
+
+  // ── OPTIONAL: RSVP via WhatsApp ──
+  // RSVPs are delivered by EMAIL (rsvpEmail above). Leave this list empty
+  // and no WhatsApp buttons appear in the form. If you ever want them,
+  // add entries like { label: "Octave", number: "250788123456" }.
+  rsvpWhatsapp: [],
 };
 
 /** Photo placeholders — drop real files into /public and update these paths. */
@@ -107,9 +120,20 @@ const GALLERY = [
   { src: "/4.jpeg", alt: "Add a photo with family" },
 ];
 
+// Cleans any way of typing a Rwanda number into WhatsApp/tel format:
+// "0788 123 456", "+250 788 123 456", "250 0788123456" -> "250788123456"
+function normalizePhone(raw) {
+  let n = String(raw).replace(/\D/g, "");
+  if (n.startsWith("00")) n = n.slice(2); // 00250... -> 250...
+  if (n.startsWith("2500")) n = "250" + n.slice(4); // 2500788... -> 250788...
+  if (n.startsWith("0")) n = "250" + n.slice(1); // 0788... -> 250788...
+  if (n.length === 9) n = "250" + n; // 788123456 -> 250788123456
+  return n;
+}
+
 function formatPhone(number) {
   // 250788123456 -> +250 788 123 456
-  const n = String(number).replace(/\D/g, "");
+  const n = normalizePhone(number);
   return `+${n.slice(0, 3)} ${n.slice(3, 6)} ${n.slice(6, 9)} ${n.slice(9)}`.trim();
 }
 
@@ -448,7 +472,7 @@ function App() {
   };
 
   const whatsappHref = (number) =>
-    `https://wa.me/${number}?text=${encodeURIComponent(buildWhatsappText())}`;
+    `https://wa.me/${normalizePhone(number)}?text=${encodeURIComponent(buildWhatsappText())}`;
 
   return (
     <div className="app">
@@ -798,25 +822,36 @@ function App() {
                 </p>
                 <div className="contact-cards">
                   {CONFIG.contacts.map((c) => (
-                    <div className="contact-card" key={c.number}>
+                    <div className="contact-card" key={c.label}>
                       <p className="contact-role">{c.role}</p>
                       <p className="contact-name">{c.label}</p>
-                      <a className="contact-number" href={`tel:+${c.number}`}>
-                        {formatPhone(c.number)}
-                      </a>
-                      <div className="contact-actions">
-                        <a className="button button--outline" href={`tel:+${c.number}`}>
-                          Call
+
+                      {(c.numbers || [c.number]).filter(Boolean).map((num) => (
+                        <div className="contact-line" key={num}>
+                          <a className="contact-number" href={`tel:+${normalizePhone(num)}`}>
+                            {formatPhone(num)}
+                          </a>
+                          <div className="contact-actions">
+                            <a className="button button--outline" href={`tel:+${normalizePhone(num)}`}>
+                              Call
+                            </a>
+                            <a
+                              className="button button--outline"
+                              href={`https://wa.me/${normalizePhone(num)}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              WhatsApp
+                            </a>
+                          </div>
+                        </div>
+                      ))}
+
+                      {c.email && (
+                        <a className="contact-email" href={`mailto:${c.email}`}>
+                          {c.email}
                         </a>
-                        <a
-                          className="button button--outline"
-                          href={`https://wa.me/${c.number}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          WhatsApp
-                        </a>
-                      </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -949,8 +984,8 @@ function App() {
 
                 {submitError && (
                   <p className="rsvp-error">
-                    Something went wrong sending that — please try the WhatsApp
-                    option below instead.
+                    Something went wrong sending that — please try again in a
+                    moment{CONFIG.rsvpWhatsapp.length > 0 ? ", or use the WhatsApp option below" : ""}.
                   </p>
                 )}
 
@@ -964,7 +999,7 @@ function App() {
                   </button>
 
                   {attending &&
-                    CONFIG.contacts.map((c) => (
+                    CONFIG.rsvpWhatsapp.map((c) => (
                       <a
                         key={c.number}
                         href={whatsappHref(c.number)}

@@ -516,9 +516,14 @@ function App() {
                 <GoldLock unlocked={unlocking} size={84} />
               </span>
             </button>
-            <p className="entry-tap-label">
-              {unlocking ? "Welcome" : "Tap the lock to open"}
-            </p>
+            {unlocking ? (
+              <p className="entry-tap-label">Welcome</p>
+            ) : (
+              <button className="entry-hint" onClick={openInvitation}>
+                <span className="entry-finger" aria-hidden="true">👆</span>
+                <span className="entry-hint-text">Click here to open</span>
+              </button>
+            )}
           </div>
         </div>
       )}
